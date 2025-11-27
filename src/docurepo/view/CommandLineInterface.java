@@ -1,52 +1,51 @@
 package docurepo.view;
 
-import docurepo.controller.DocumentController;
-import javax.swing.*;
+import java.util.Scanner;
+import docurepo.controller.UserController;
 
-public class LoginView extends JFrame {
+public class CommandLineInterface {
+    public static void Run(){
+        ClearScreen();
+        System.out.println("SELAMAT DATANG PADA APLIKASI DOCUREPO!\n");
 
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+        Scanner sc = new Scanner(System.in);
+        boolean exit = false;
+        boolean login = false;
+        while (!exit) {
+            
+            if (!login) {
+                System.out.print("Username: ");
+                String username = sc.nextLine();
 
-    public LoginView(DocumentController controller) {
+                System.out.print("Password: ");
+                String password = sc.nextLine();
 
-        setTitle("Login Form");
-        setSize(300, 180);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
-
-        JLabel l1 = new JLabel("Username:");
-        l1.setBounds(20, 20, 80, 25);
-        add(l1);
-
-        usernameField = new JTextField();
-        usernameField.setBounds(110, 20, 150, 25);
-        add(usernameField);
-
-        JLabel l2 = new JLabel("Password:");
-        l2.setBounds(20, 60, 80, 25);
-        add(l2);
-
-        passwordField = new JPasswordField();
-        passwordField.setBounds(110, 60, 150, 25);
-        add(passwordField);
-
-        JButton loginBtn = new JButton("Login");
-        loginBtn.setBounds(110, 95, 150, 30);
-        add(loginBtn);
-
-        loginBtn.addActionListener(e -> {
-            String user = usernameField.getText();
-            String pass = new String(passwordField.getPassword());
-
-            boolean success = controller.login(user, pass);
-
-            if (success) {
-                JOptionPane.showMessageDialog(this, "Login Berhasil!");
+                login = UserController.IsUserValid(username, password);
+                if (login)
+                    ClearScreen();
             } else {
-                JOptionPane.showMessageDialog(this, "Login Gagal!", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.print("<DOCUREPO> ");
+                int command = GetCommand(sc);
+                switch(command){
+                    case -1:
+                        exit = true;
+                        break;
+                    default:
+                        break;
+                }
             }
-        });
+        }
+    }
+
+    private static int GetCommand(Scanner sc){
+        String input = sc.nextLine();
+        if (input.equals("exit"))
+            return -1;
+        return 0;
+    }
+
+    private static void ClearScreen(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

@@ -24,3 +24,9 @@ pbo-1-2025-c
 - Program dapat menghapus dokumen yang dimilikinya.
 - Program dapat memperlihatkan berkas-berkas dokumen yang dimilikinya.
 - Program dapat mencarikan dokumen dengan kata kunci yang dimasukkan pengguna.
+
+## Berkas Utilitas
+
+### src/build.ps1
+- Menghapus semua hasil *compile java* dan menjalankan kembali *compile java*
+- Dipakai dengan menjalankan `powershell -ExecutionPolicy Bypass -File build.ps1`

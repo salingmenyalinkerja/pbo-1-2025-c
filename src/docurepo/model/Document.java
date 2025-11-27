@@ -1,19 +1,19 @@
 package docurepo.model;
 
-public class User {
-    private String username;
-    private String password;
+public class Document {
+    protected String name;
+    protected int version;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Document(String name){
+        SetName(name);
+        SetVersion(1);
     }
 
-    public String getUsername() {
-        return username;
+    public void SetName(String name){
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public void SetVersion(int version){
+        this.version = version;
     }
 }
