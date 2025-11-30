@@ -1,6 +1,10 @@
 package docurepo.model;
 
 public class Document {
+    public static void main(String[] args){
+        System.out.println("=====DEBUGGING=====");
+    }
+    
     protected String name;
     protected int version;
 

@@ -25,6 +25,39 @@ pbo-1-2025-c
 - Program dapat memperlihatkan berkas-berkas dokumen yang dimilikinya.
 - Program dapat mencarikan dokumen dengan kata kunci yang dimasukkan pengguna.
 
+## Pembagian Tugas
+
+- DocumentListingController
+    - A
+    - B
+- DocumentSearchController
+    - A
+    - B
+- DocumentStorageController
+    - A
+    - B
+- DocumentVersioningController
+    - A
+    - B
+- Document
+    - A
+    - B
+- DOCXDocument
+    - A
+    - B
+- PDFDocument
+    - A
+    - B
+- SearchKeyword
+    - A
+    - B
+- DocumentViewer
+    - A
+    - B
+- SearchDocumentViewer
+    - A
+    - B
+
 ## Berkas Utilitas
 
 ### src/build.ps1

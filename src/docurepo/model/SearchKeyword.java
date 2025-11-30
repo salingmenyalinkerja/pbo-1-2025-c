@@ -1,11 +1,7 @@
 package docurepo.model;
 
-public class PDFDocument extends Document {
+public class SearchKeyword {
     public static void main(String[] args){
         System.out.println("=====DEBUGGING=====");
-    }
-    
-    public PDFDocument(String name){
-        super(name);
     }
 }
