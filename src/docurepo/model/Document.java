@@ -5,12 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-// Tambahan untuk PDF
-import org.apache.pdfbox.pdmodel.*;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-
 public class Document {
 
     protected String name;
@@ -35,9 +29,8 @@ public class Document {
     // format tanggal & waktu
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    // constructor tambahan setelah versi diset
+    // block initializer (jalan setelah konstruktor)
     {
-        // block initializer 
         String time = LocalDateTime.now().format(formatter);
         history.add("Version 1 created at " + time);
     }
@@ -77,40 +70,21 @@ public class Document {
         }
     }
 
-    // simpan ke PDF
-    public void saveHistoryToPDF(String filename) {
+    // simpan ke HTML (bisa dibuka di browser & print PDF)
+    public void saveHistoryToHTML(String filename) {
         try {
-            PDDocument pdf = new PDDocument();
-            PDPage page = new PDPage(PDRectangle.A4);
-            pdf.addPage(page);
-
-            PDPageContentStream content = new PDPageContentStream(pdf, page);
-            content.setFont(PDType1Font.HELVETICA, 12);
-
-            float y = 770;
+            FileWriter writer = new FileWriter(filename);
+            writer.write("<html><body>");
+            writer.write("<h2>Document History</h2>");
 
             for (String h : history) {
-                if (y < 50) {
-                    content.close();
-                    page = new PDPage(PDRectangle.A4);
-                    pdf.addPage(page);
-                    content = new PDPageContentStream(pdf, page);
-                    content.setFont(PDType1Font.HELVETICA, 12);
-                    y = 770;
-                }
-                content.beginText();
-                content.newLineAtOffset(50, y);
-                content.showText(h);
-                content.endText();
-                y -= 20;
+                writer.write("<p>" + h + "</p>");
             }
 
-            content.close();
-            pdf.save(filename);
-            pdf.close();
-
+            writer.write("</body></html>");
+            writer.close();
         } catch (Exception e) {
-            System.out.println("Error PDF: " + e.getMessage());
+            System.out.println("Error HTML: " + e.getMessage());
         }
     }
 
