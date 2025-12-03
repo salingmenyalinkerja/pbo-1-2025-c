@@ -2,8 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 
 public class SearchDocumentViewer extends JFrame {
 
@@ -52,12 +50,12 @@ public class SearchDocumentViewer extends JFrame {
             String fileName = file.getName().toLowerCase();
 
             try {
-                if (fileName.endsWith(".txt")) {
-                    loadTxt(file);
-                } else if (fileName.endsWith(".pdf")) {
-                    loadPdf(file);
+                // Mendukung TXT, CSV, HTML
+                if (fileName.endsWith(".txt") || fileName.endsWith(".csv") || fileName.endsWith(".html")) {
+                    loadTextFile(file);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Format tidak didukung (hanya TXT & PDF)");
+                    JOptionPane.showMessageDialog(this, 
+                        "Format tidak didukung.\nGunakan: TXT, CSV, atau HTML");
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error membuka file: " + ex.getMessage());
@@ -65,20 +63,11 @@ public class SearchDocumentViewer extends JFrame {
         }
     }
 
-    // LOAD TXT FILE
-    private void loadTxt(File file) throws IOException {
+    // LOAD TEXT FILE (TXT, CSV, HTML)
+    private void loadTextFile(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         textArea.read(reader, null);
         reader.close();
-    }
-
-    // LOAD PDF FILE
-    private void loadPdf(File file) throws IOException {
-        PDDocument document = PDDocument.load(file);
-        PDFTextStripper pdfStripper = new PDFTextStripper();
-        String text = pdfStripper.getText(document);
-        textArea.setText(text);
-        document.close();
     }
 
     // FUNGSI SEARCH
