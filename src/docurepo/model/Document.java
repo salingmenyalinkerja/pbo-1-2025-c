@@ -1,23 +1,32 @@
 package docurepo.model;
 
 public class Document {
-    public static void main(String[] args){
-        System.out.println("=====DEBUGGING=====");
-    }
-    
     protected String name;
     protected int version;
 
     public Document(String name){
-        SetName(name);
-        SetVersion(1);
+        setName(name);
+        setVersion(1);
     }
 
-    public void SetName(String name){
+    public String getName() {
+        return name;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setName(String name){
         this.name = name;
     }
 
-    public void SetVersion(int version){
+    public void setVersion(int version){
         this.version = version;
+    }
+
+    public void printInfo() {
+        System.out.println("Document Name : " + name);
+        System.out.println("Version       : " + version);
     }
 }
