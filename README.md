@@ -28,35 +28,30 @@ pbo-1-2025-c
 ## Pembagian Tugas
 
 - DocumentListingController
-    - A
-    - B
+    - 021220125	MARIA GORETI HOKON
+    - 021220128	VULGENSIUS GAKA NAGA
 - DocumentSearchController
-    - A
-    - B
+    - 021220067	GABRIEL NOVI ELIAS FERNANDES
+    - 021240103	OKTAVIANUS RIANO LABA
 - DocumentStorageController
-    - A
-    - B
+    - 021220171	MARSELINUS GOLENG PAYONG
+    - 021240110	PAULINUS ALDOVAN ERIC MBOMBA
 - DocumentVersioningController
-    - A
-    - B
+    - 021240083	MARIA SERAFIN PAGANG
+    - 021220161	ADAM SIPRIANTO SOGEN
 - Document
-    - A
-    - B
+    - 021240007	AMBROSIUS JUWANDY SAKUNAB
 - DOCXDocument
-    - A
-    - B
+    - 021240031	DEWI ANGGRENI SITE
 - PDFDocument
-    - A
-    - B
+    - 021240107	PASKALIS GERIANSA WADU
 - SearchKeyword
-    - A
-    - B
+    - 021240027	CYNDI SILVINA MARIA WISANG
 - DocumentViewer
-    - A
-    - B
+    - 021240085	MARIO BERNADUS ADRIZAL
+    - 021240101	NIKODEMUS GEDOFRIDUS FREDERICO LINA RATO
 - SearchDocumentViewer
-    - A
-    - B
+    - 021240002	AGUSTHO TRENDZ MITANG
 
 ## Berkas Utilitas
 
