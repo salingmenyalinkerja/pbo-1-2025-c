@@ -58,3 +58,7 @@ pbo-1-2025-c
 ### src/build.ps1
 - Menghapus semua hasil *compile java* dan menjalankan kembali *compile java*
 - Dipakai dengan menjalankan `powershell -ExecutionPolicy Bypass -File build.ps1`
+
+### src/clean.ps1
+- Menghapus semua hasil *compile java*
+- Dipakai dengan menjalankan `powershell -ExecutionPolicy Bypass -File clean.ps1`
