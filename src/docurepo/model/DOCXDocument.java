@@ -5,7 +5,19 @@ public class DOCXDocument extends Document {
         System.out.println("=====DEBUGGING=====");
     }
     
-    public DOCXDocument(String name){
-        super(name);
+    public DOCXDocument(String name, byte[] content){
+        super(name, content);
+    }
+
+    public DOCXDocument(String name, int version, byte[] content){
+        super(name, version, content);
+    }
+
+    @Override
+    public String GetSaveString() {
+        return "1|"
+            + name + "|"
+            + version + "|"
+            + GetEncodedContent();
     }
 }

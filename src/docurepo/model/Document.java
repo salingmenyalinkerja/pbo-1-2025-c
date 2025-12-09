@@ -1,18 +1,23 @@
 package docurepo.model;
 
-import java.io.FileWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Base64;
 
 public class Document {
 
     protected String name;
     protected int version;
+    protected byte[] content;
 
-    public Document(String name){
+    public Document(String name, byte[] content){
         SetName(name);
         SetVersion(1);
+        SetContent(content);
+    }
+
+    public Document(String name, int version, byte[] content){
+        SetName(name);
+        SetVersion(version);
+        SetContent(content);
     }
 
     public void SetName(String name){
@@ -23,69 +28,23 @@ public class Document {
         this.version = version;
     }
 
-    // menyimpan history
-    protected ArrayList<String> history = new ArrayList<>();
-
-    // format tanggal & waktu
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    // block initializer (jalan setelah konstruktor)
-    {
-        String time = LocalDateTime.now().format(formatter);
-        history.add("Version 1 created at " + time);
+    public void SetContent(byte[] content){
+        this.content = content;
     }
 
-    // update versi
-    public void updateVersion() {
-        this.version++;
-        String time = LocalDateTime.now().format(formatter);
-        history.add("Version " + this.version + " updated at " + time);
+    public String GetName(){
+        return name;
     }
 
-    // ambil history
-    public ArrayList<String> getHistory() {
-        return history;
+    public String GetEncodedContent() {
+        String encodedContent = Base64.getEncoder().encodeToString(content);
+        return encodedContent;
     }
 
-    // simpan ke TXT
-    public void saveHistoryToTxt(String filename) {
-        try {
-            FileWriter writer = new FileWriter(filename);
-            for (String h : history) writer.write(h + "\n");
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("Error TXT: " + e.getMessage());
-        }
+    public String GetSaveString() {
+        return "0|"
+            + name + "|"
+            + version + "|"
+            + GetEncodedContent();
     }
-
-    // simpan ke CSV
-    public void saveHistoryToCSV(String filename) {
-        try {
-            FileWriter writer = new FileWriter(filename);
-            writer.write("History\n");
-            for (String h : history) writer.write("\"" + h + "\"\n");
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("Error CSV: " + e.getMessage());
-        }
-    }
-
-    // simpan ke HTML (bisa dibuka di browser & print PDF)
-    public void saveHistoryToHTML(String filename) {
-        try {
-            FileWriter writer = new FileWriter(filename);
-            writer.write("<html><body>");
-            writer.write("<h2>Document History</h2>");
-
-            for (String h : history) {
-                writer.write("<p>" + h + "</p>");
-            }
-
-            writer.write("</body></html>");
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("Error HTML: " + e.getMessage());
-        }
-    }
-
 }
