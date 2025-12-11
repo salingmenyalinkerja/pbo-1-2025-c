@@ -13,6 +13,10 @@ public class PDFDocument extends Document {
         super(name, version, content);
     }
 
+    public PDFDocument(String name, String version, byte[] content){
+        super(name, version, content);
+    }
+
     @Override
     public String GetSaveString() {
         return "2|"

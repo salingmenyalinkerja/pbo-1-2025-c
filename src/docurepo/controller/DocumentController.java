@@ -1,7 +1,11 @@
 package docurepo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DocumentController {
     protected static boolean IsPathExists(Path path) {
@@ -19,15 +23,33 @@ public class DocumentController {
         return path.endsWith(".pdf");
     }
 
-    protected static String GetStorageDirectory() {
+    protected static String GetStorageDirectoryPath() {
         return System.getProperty("user.dir") + "\\" + "storage";
     }
 
     protected static String GetMetadataPath() {
-        return GetStorageDirectory() + "\\" + "metadata.data";
+        return GetStorageDirectoryPath() + "\\" + "metadata.data";
     }
 
     protected static String FormatPathSafely(String filename) {
-        return GetStorageDirectory() + "\\" + filename;
+        return GetStorageDirectoryPath() + "\\" + filename;
+    }
+
+    protected static ArrayList<String> GetMetadataLines() {
+        File metadataFile = new File(GetMetadataPath());
+        ArrayList<String> metadataLines = new ArrayList();
+
+        try {
+            Scanner metadataReader = new Scanner(metadataFile);
+            while (metadataReader.hasNextLine()) {
+                String line = metadataReader.nextLine();
+                metadataLines.add(line);
+            }
+
+            return metadataLines;
+        } catch (IOException e) {
+        }
+
+        return metadataLines;
     }
 }

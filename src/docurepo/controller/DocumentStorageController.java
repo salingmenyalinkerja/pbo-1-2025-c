@@ -1,6 +1,8 @@
 package docurepo.controller;
 
+import docurepo.model.Document;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +17,7 @@ public class DocumentStorageController extends DocumentController {
     public static String CreateDocument(String sourcePath, String filename){
         Path source = Paths.get(sourcePath);
         Path destination = Paths.get(FormatPathSafely(filename));
-        Path storageDirectory = Paths.get(GetStorageDirectory());
+        Path storageDirectory = Paths.get(GetStorageDirectoryPath());
 
         try {
             if (!IsPathExists(storageDirectory))
@@ -32,6 +34,20 @@ public class DocumentStorageController extends DocumentController {
         } catch (IOException e) {
             return "Document is unsuccessfully created: " + e;
         }
+    }
+
+    public static String CreateDocument(Document document){
+        if (document == null)
+            return "Targeted document is not found.";
+
+        String documentPath = GetStorageDirectoryPath() + "\\" + document.GetName();
+        try (FileOutputStream fos = new FileOutputStream(documentPath)) {
+            fos.write(document.GetContent());
+        } catch (IOException e) {
+            return "Document is unsuccessfully updated: " + e;
+        }
+
+        return "Document is successfully updated.";
     }
 
     public static String DeleteDocument(String filename) {

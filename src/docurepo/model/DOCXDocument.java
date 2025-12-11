@@ -13,6 +13,10 @@ public class DOCXDocument extends Document {
         super(name, version, content);
     }
 
+    public DOCXDocument(String name, String version, byte[] content){
+        super(name, version, content);
+    }
+
     @Override
     public String GetSaveString() {
         return "1|"

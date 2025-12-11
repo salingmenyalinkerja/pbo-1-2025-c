@@ -1,5 +1,7 @@
 package docurepo.view;
 
+import docurepo.controller.DocumentListingController;
+import docurepo.controller.DocumentSearchController;
 import docurepo.controller.DocumentStorageController;
 import docurepo.controller.DocumentVersioningController;
 import docurepo.controller.UserController;
@@ -18,8 +20,8 @@ public class CommandLineInterface {
         Scanner sc = new Scanner(System.in);
         boolean exit = false;
         boolean login = false;
-        String path;
-        String filename;
+        String input1;
+        String input2;
         String response = "";
         while (!exit) {
             
@@ -42,23 +44,46 @@ public class CommandLineInterface {
                         break;
                     case 1:
                         System.out.print("Enter document path: ");
-                        path = sc.nextLine();
+                        input1 = sc.nextLine();
                         System.out.print("Enter filename: ");
-                        filename = sc.nextLine();
+                        input2 = sc.nextLine();
 
-                        response = DocumentStorageController.CreateDocument(path, filename);
+                        response = DocumentStorageController.CreateDocument(input1, input2);
                         break;
                     case 2:
                         System.out.print("Enter filename to be deleted: ");
-                        filename = sc.nextLine();
+                        input1 = sc.nextLine();
 
-                        response = DocumentStorageController.DeleteDocument(filename);
+                        response = DocumentStorageController.DeleteDocument(input1);
+                        break;
+                    case 3:
+                        System.out.print("Enter filename to be changed: ");
+                        input1 = sc.nextLine();
+                        System.out.print("Enter the version number: ");
+                        input2 = sc.nextLine();
+
+                        response = DocumentStorageController.CreateDocument(
+                            DocumentVersioningController.GetDocumentOfAVersion(
+                                input1, input2
+                            )
+                        );
+                        break;
+                    case 4:
+                        DocumentListingController.ListFiles();
+                        response = "";
+                        break;
+                    case 5:
+                        System.out.print("Enter keyword: ");
+                        input1 = sc.nextLine();
+
+                        DocumentSearchController.SearchFiles(input1);
+                        response = "";
                         break;
                     default:
                         response = "Invalid command or input";
                         break;
                 }
-                if (command > 0)
+                if (command > -1)
                     System.out.println(response);
             }
         }
@@ -72,6 +97,12 @@ public class CommandLineInterface {
             return 1;
         if (input.equals("delete"))
             return 2;
+        if (input.equals("change"))
+            return 3;
+        if (input.equals("list"))
+            return 4;
+        if (input.equals("search"))
+            return 5;
         return 0;
     }
 

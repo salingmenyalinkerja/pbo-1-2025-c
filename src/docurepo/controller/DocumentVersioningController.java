@@ -6,10 +6,8 @@ import docurepo.model.PDFDocument;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Base64;
 
 public class DocumentVersioningController extends DocumentController {
     public static void main(String[] args){
@@ -19,27 +17,25 @@ public class DocumentVersioningController extends DocumentController {
     private static ArrayList<String> metadataLines;
 
     public static boolean Init() {
+        String storagePath = GetStorageDirectoryPath();
         String metadataPath = GetMetadataPath();
+        File storageDirectory = new File(storagePath);
         File metadataFile = new File(metadataPath);
-        metadataLines =  new ArrayList();
 
         try {
-            Path metadata = Paths.get(metadataPath);
-            if(!IsPathExists(metadata)) {
-                
+            if (!storageDirectory.exists())
+                storageDirectory.mkdir();
+            
+            if (!metadataFile.exists()) {
                 boolean success = metadataFile.createNewFile();
                 if (success)
                     return true;
             } else {
-                Scanner metadataReader = new Scanner(metadataFile);
-                while (metadataReader.hasNextLine()) {
-                    String line = metadataReader.nextLine();
-                    metadataLines.add(line);
-                }
+                metadataLines = GetMetadataLines();
                 return true;
             }
         } catch (IOException e) {
-            
+            System.out.println(e);
         }
         return false;
     }
@@ -86,5 +82,28 @@ public class DocumentVersioningController extends DocumentController {
                 writer.write(String.format("%s\n", line));
         } catch (IOException e) {
         }
+    }
+
+    public static Document GetDocumentOfAVersion(String filename, String version) {
+        for(String line : metadataLines) {
+            if (line.contains(filename)) {
+                String[] parts = line.split("\\|");
+                String foundFilename = parts[1];
+                String foundVersion = parts[2];
+
+                if (
+                    foundFilename.equals(filename) &&
+                    foundVersion.equals(version)
+                ) {
+                    String encodedContent = parts[3];
+                    return new Document(
+                        foundFilename,
+                        foundVersion,
+                        Base64.getDecoder().decode(encodedContent)
+                    );
+                }
+            }
+        }
+        return null;
     }
 }

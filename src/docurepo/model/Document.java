@@ -20,6 +20,12 @@ public class Document {
         SetContent(content);
     }
 
+    public Document(String name, String version, byte[] content){
+        SetName(name);
+        SetVersion(version);
+        SetContent(content);
+    }
+
     public void SetName(String name){
         this.name = name;
     }
@@ -28,12 +34,20 @@ public class Document {
         this.version = version;
     }
 
+    public void SetVersion(String version){
+        this.version = Integer.parseInt(version);
+    }
+
     public void SetContent(byte[] content){
         this.content = content;
     }
 
     public String GetName(){
         return name;
+    }
+
+    public byte[] GetContent(){
+        return content;
     }
 
     public String GetEncodedContent() {
